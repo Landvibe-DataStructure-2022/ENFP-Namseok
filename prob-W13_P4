@@ -1,0 +1,95 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int map[501][501];
+int n,m;
+
+int main()
+{
+    cin>>n>>m;
+    for(int i=1;i<=n;i++)
+        for(int j=1;j<=n;j++)
+            cin>>map[i][j];
+    
+    while(m--)
+    {
+        int k,f; cin>>k>>f;
+        vector<int> v;
+        bool use[501] = {false};
+        switch (f) {
+            case 0:
+                for(int i=1;i<=n;i++)
+                {
+                    if(i==k)
+                        continue;
+                    if(map[k][i]!=2)
+                        continue;
+                    for(int j=1;j<=n;j++)
+                    {
+                        if(j==k || j==i)
+                            continue;
+                        
+                        if(map[i][j]==2 && use[j]==false && map[k][j] != 2 && map[k][j] != 1)
+                        {
+                            v.push_back(j);
+                            use[j] = true;
+                        }
+                    }
+                }
+                break;
+            case 1:
+                for(int i=1;i<=n;i++)
+                {
+                    if(i==k)
+                        continue;
+                    if(map[k][i]!=2)
+                        continue;
+                    for(int j=1;j<=n;j++)
+                    {
+                        if(j==k || j==i)
+                            continue;
+                        
+                        if(map[i][j]==1 && use[j]==false && map[k][j]!=2 && map[k][j]!=1)
+                        {
+                            v.push_back(j);
+                            use[j] = true;
+                        }
+                    }
+                }
+                break;
+        }
+        
+        for(int i=0;i<v.size();i++)
+        {
+            for(int j=0;j<v.size();j++)
+            {
+                if(v[i] > v[j])
+                    swap(v[i],v[j]);
+            }
+        }
+        
+        if(!v.empty())
+        {
+            for(auto a :v)
+                cout<<a<<" ";
+            cout<<"\n";
+        }
+        else
+            cout<<"0\n";
+    }
+}
+
+/*
+6 3
+0 1 0 1 0 1
+1 0 1 2 0 0
+0 1 0 0 0 0
+1 2 0 0 2 2
+0 0 0 2 0 2
+1 0 0 2 2 0
+2 0
+5 1
+6 1
+ */
